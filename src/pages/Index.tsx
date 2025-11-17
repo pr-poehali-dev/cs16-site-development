@@ -22,6 +22,17 @@ const Index = () => {
     { id: 4, title: 'Без спама в чате', description: 'Флуд и реклама запрещены' },
   ];
 
+  const topPlayers = [
+    { rank: 1, name: 'ProGamer2024', kills: 15420, deaths: 8234, kd: 1.87, hours: 842 },
+    { rank: 2, name: 'HеаdShоtKing', kills: 14256, deaths: 7892, kd: 1.81, hours: 756 },
+    { rank: 3, name: 'CyberNinja', kills: 13845, deaths: 8156, kd: 1.70, hours: 698 },
+    { rank: 4, name: 'ShadowStriker', kills: 12934, deaths: 7645, kd: 1.69, hours: 645 },
+    { rank: 5, name: 'BulletMaster', kills: 12456, deaths: 7823, kd: 1.59, hours: 623 },
+    { rank: 6, name: 'SniperElite', kills: 11892, deaths: 7534, kd: 1.58, hours: 587 },
+    { rank: 7, name: 'RushMachine', kills: 11234, deaths: 7234, kd: 1.55, hours: 542 },
+    { rank: 8, name: 'TacticalGenius', kills: 10845, deaths: 7123, kd: 1.52, hours: 512 },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <nav className="fixed top-0 w-full bg-card/80 backdrop-blur-lg border-b border-primary/20 z-50">
@@ -39,6 +50,7 @@ const Index = () => {
               {[
                 { id: 'home', label: 'Главная', icon: 'Home' },
                 { id: 'servers', label: 'Сервера', icon: 'Server' },
+                { id: 'stats', label: 'Рейтинг', icon: 'Trophy' },
                 { id: 'rules', label: 'Правила', icon: 'FileText' },
                 { id: 'contacts', label: 'Контакты', icon: 'Mail' }
               ].map(item => (
@@ -171,6 +183,116 @@ const Index = () => {
                 </Card>
               ))}
             </div>
+          </div>
+        )}
+
+        {activeSection === 'stats' && (
+          <div className="container mx-auto px-4 py-16 animate-fade-in">
+            <h2 className="text-5xl font-bold mb-12 text-center text-glow text-primary">Топ игроков</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <Card className="bg-card border-primary/30 p-6">
+                <div className="flex items-center gap-4">
+                  <div className="bg-primary/20 p-3 rounded-lg">
+                    <Icon name="Users" size={32} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Всего игроков</p>
+                    <p className="text-3xl font-bold">2,547</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="bg-card border-secondary/30 p-6">
+                <div className="flex items-center gap-4">
+                  <div className="bg-secondary/20 p-3 rounded-lg">
+                    <Icon name="Target" size={32} className="text-secondary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Убийств сегодня</p>
+                    <p className="text-3xl font-bold">45,892</p>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="bg-card border-accent/30 p-6">
+                <div className="flex items-center gap-4">
+                  <div className="bg-accent/20 p-3 rounded-lg">
+                    <Icon name="Clock" size={32} className="text-accent" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Игровое время</p>
+                    <p className="text-3xl font-bold">12,456ч</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            <Card className="bg-card border-primary/30 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-primary/10 border-b border-primary/30">
+                    <tr>
+                      <th className="px-6 py-4 text-left">
+                        <div className="flex items-center gap-2">
+                          <Icon name="Trophy" size={20} className="text-primary" />
+                          <span className="font-bold">Место</span>
+                        </div>
+                      </th>
+                      <th className="px-6 py-4 text-left font-bold">Игрок</th>
+                      <th className="px-6 py-4 text-center font-bold">Убийства</th>
+                      <th className="px-6 py-4 text-center font-bold">Смерти</th>
+                      <th className="px-6 py-4 text-center font-bold">K/D</th>
+                      <th className="px-6 py-4 text-center font-bold">Часов</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {topPlayers.map((player) => (
+                      <tr 
+                        key={player.rank} 
+                        className="border-b border-primary/10 hover:bg-primary/5 transition-colors"
+                      >
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            {player.rank <= 3 ? (
+                              <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${
+                                player.rank === 1 ? 'bg-yellow-500/20 text-yellow-500' :
+                                player.rank === 2 ? 'bg-gray-400/20 text-gray-400' :
+                                'bg-orange-600/20 text-orange-600'
+                              }`}>
+                                {player.rank}
+                              </div>
+                            ) : (
+                              <span className="w-10 text-center font-bold text-muted-foreground">{player.rank}</span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                              <Icon name="User" size={20} className="text-primary" />
+                            </div>
+                            <span className="font-semibold">{player.name}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          <span className="text-green-500 font-bold">{player.kills.toLocaleString()}</span>
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          <span className="text-red-500 font-bold">{player.deaths.toLocaleString()}</span>
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          <span className="font-bold text-secondary">{player.kd.toFixed(2)}</span>
+                        </td>
+                        <td className="px-6 py-4 text-center">
+                          <span className="text-muted-foreground">{player.hours}ч</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Card>
           </div>
         )}
 
